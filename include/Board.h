@@ -2,12 +2,15 @@
 
 class Board {
     private:
-        char board[3][3];
+        int size;
+        char** board;
 
 
     public:
-        Board();
+        Board(int size);
+        ~Board();
         void drawBoard();
+        void createBoard();
         void makeMove();
         bool checkWin();
         bool isFull();

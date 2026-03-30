@@ -47,7 +47,7 @@ void Game::run() {
 
     choseOpponent();
     choseDifficulty();
-    
+
     
     while (true) {
 
