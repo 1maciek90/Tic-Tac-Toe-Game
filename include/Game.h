@@ -23,5 +23,5 @@ class Game {
 
         void choseDifficulty();
         void choseOpponent();
-        void switchPlayer();
+        void switchPlayer(Player*& current);
 };

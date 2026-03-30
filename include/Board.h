@@ -11,7 +11,7 @@ class Board {
         ~Board();
         void drawBoard();
         void createBoard();
-        void makeMove();
+        void makeMove(char symbol);
         bool checkWin();
         bool isFull();
         

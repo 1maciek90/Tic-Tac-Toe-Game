@@ -49,6 +49,15 @@ void Game::choseOpponent() {
 }
 
 
+void Game::switchPlayer(Player*& current) {
+    if (current == &player1) {
+        current = &player2;
+    } else {
+        current = &player1;
+    }
+}
+
+
 void Game::run() {
     Player* current = &player1;
 
@@ -65,10 +74,20 @@ void Game::run() {
 
     Game::board = new Board(size);
 
-    Game::board->drawBoard();
 
+    while (true) {
+        Game::board->drawBoard();
+        Game::board->makeMove(current->getSymbol());
+        if (Game::board->checkWin()) {
+            std::cout << "Player " << current->getSymbol() << " wins!" << std::endl;
+            break;
+        } else if (Game::board->isFull()) {
+            std::cout << "It's a draw!" << std::endl;
+            break;
+        }
 
-    
+        switchPlayer(current);
+    }
     
 }
 
