@@ -5,6 +5,6 @@ class Player{
         char symbol;
 
     public:
-        Player(char c);
-        void getSymbol();
+        Player(char c = 'X');
+        char getSymbol() const;
 };

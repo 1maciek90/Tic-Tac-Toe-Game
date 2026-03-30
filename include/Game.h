@@ -14,7 +14,7 @@ class Game {
         void run();
 
     private:
-        Board board;
+        Board* board;
         Player player1;
         Player player2;
         
