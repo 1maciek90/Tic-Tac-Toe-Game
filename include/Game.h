@@ -11,6 +11,7 @@ enum Difficulty {
 class Game {
     public:
         Game();
+        ~Game();
         void run();
 
     private:
@@ -23,5 +24,5 @@ class Game {
 
         void choseDifficulty();
         void choseOpponent();
-        void switchPlayer(Player*& current);
+        Player *switchPlayer(Player* current);
 };

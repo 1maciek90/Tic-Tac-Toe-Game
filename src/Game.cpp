@@ -3,11 +3,15 @@
 
 
 Game::Game() : board(nullptr), player1('X'), player2('O') {
-    Game::isComputerPlaying = false;
-    Game::difficulty = EASY;
+    isComputerPlaying = false;
+    difficulty = EASY;
 }
 
-void Game::choseDifficulty() {
+Game::~Game() {
+    delete board;
+}
+
+void Game::choseOpponent() {
     int chose_player = 0;
     while (chose_player != 1 && chose_player != 2) {
         std::cout << "1. Play against player 2" << std::endl;
@@ -17,9 +21,9 @@ void Game::choseDifficulty() {
         std::cin >> chose_player;
 
         if (chose_player == 1) {
-            Game::isComputerPlaying = false;
+            isComputerPlaying = false;
         } else if (chose_player == 2) {
-            Game::isComputerPlaying = true;
+            isComputerPlaying = true;
         } else {
             std::cout << "Incorect number" << std::endl;
         }
@@ -27,7 +31,7 @@ void Game::choseDifficulty() {
 }
 
 
-void Game::choseOpponent() {
+void Game::choseDifficulty() {
     int chose_difficulty = 0;
     while (chose_difficulty != 1 && chose_difficulty != 2 && chose_difficulty != 3) {
         std::cout << "1. Easy" << std::endl;
@@ -49,12 +53,8 @@ void Game::choseOpponent() {
 }
 
 
-void Game::switchPlayer(Player*& current) {
-    if (current == &player1) {
-        current = &player2;
-    } else {
-        current = &player1;
-    }
+Player* Game::switchPlayer(Player* current) {
+    return (current == &player1) ? &player2 : &player1; 
 }
 
 
@@ -66,27 +66,29 @@ void Game::run() {
 
     Game::board = nullptr;
     int size = 3;
-    if (Game::difficulty == MEDIUM) {
+    if (difficulty == MEDIUM) {
         size = 5;
-    } else if (Game::difficulty == HARD) {
+    } else if (difficulty == HARD) {
         size = 7;
     }
 
-    Game::board = new Board(size);
+
+    if (board != nullptr) delete board;
+    board = new Board(size);
 
 
     while (true) {
-        Game::board->drawBoard();
-        Game::board->makeMove(current->getSymbol());
-        if (Game::board->checkWin()) {
+        board->drawBoard();
+        board->makeMove(current->getSymbol());
+        if (board->checkWin()) {
             std::cout << "Player " << current->getSymbol() << " wins!" << std::endl;
             break;
-        } else if (Game::board->isFull()) {
+        } else if (board->isFull()) {
             std::cout << "It's a draw!" << std::endl;
             break;
         }
 
-        switchPlayer(current);
+        current = switchPlayer(current);
     }
     
 }
