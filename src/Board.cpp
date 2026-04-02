@@ -41,6 +41,7 @@ void Board::drawBoard() {
             }
         }
         std::cout << std::endl;
+        if (i == (this->size - 1)) continue;
         for (int j = 0; j < this->size; j++) {
             if (j == 0) {
                 std::cout << "--+";

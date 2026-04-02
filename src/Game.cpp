@@ -76,10 +76,12 @@ void Game::run() {
     if (board != nullptr) delete board;
     board = new Board(size);
 
+    
+    board->drawBoard();
 
     while (true) {
-        board->drawBoard();
         board->makeMove(current->getSymbol());
+        board->drawBoard();
         if (board->checkWin()) {
             std::cout << "Player " << current->getSymbol() << " wins!" << std::endl;
             break;
