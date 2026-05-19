@@ -1,5 +1,7 @@
 #include "Board.h"
 #include <iostream>
+#include <cstdlib>
+#include <ctime>
 
 
 
@@ -68,6 +70,63 @@ void Board::makeMove(char symbol) {
     }
 
     board[row][col] = symbol;
+}
+
+
+void Board::makeComputerMove(char symbol, char opponentSymbol, int difficulty) {
+    static bool isRandomSeeded = false;
+    if (!isRandomSeeded) {
+        std::srand(static_cast<unsigned int>(std::time(nullptr)));
+        isRandomSeeded = true;
+    }
+
+    if (difficulty != 0) {
+        for (int i = 0; i < this->size; i++) {
+            for (int j = 0; j < this->size; j++) {
+                if (board[i][j] != ' ') continue;
+
+                board[i][j] = symbol;
+                if (checkWin()) {
+                    std::cout << "Computer move: " << i << " " << j << std::endl;
+                    return;
+                }
+                board[i][j] = ' ';
+            }
+        }
+    }
+
+    if (difficulty == 2) {
+        for (int i = 0; i < this->size; i++) {
+            for (int j = 0; j < this->size; j++) {
+                if (board[i][j] != ' ') continue;
+
+                board[i][j] = opponentSymbol;
+                if (checkWin()) {
+                    board[i][j] = symbol;
+                    std::cout << "Computer move: " << i << " " << j << std::endl;
+                    return;
+                }
+                board[i][j] = ' ';
+            }
+        }
+
+        int center = this->size / 2;
+        if (board[center][center] == ' ') {
+            board[center][center] = symbol;
+            std::cout << "Computer move: " << center << " " << center << std::endl;
+            return;
+        }
+    }
+
+    int row;
+    int col;
+    do {
+        row = std::rand() % this->size;
+        col = std::rand() % this->size;
+    } while (board[row][col] != ' ');
+
+    board[row][col] = symbol;
+    std::cout << "Computer move: " << row << " " << col << std::endl;
 }
 
 
@@ -145,4 +204,3 @@ bool Board::checkWin() {
 
     return false;
 }
- 

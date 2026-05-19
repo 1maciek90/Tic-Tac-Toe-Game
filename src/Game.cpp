@@ -80,7 +80,12 @@ void Game::run() {
     board->drawBoard();
 
     while (true) {
-        board->makeMove(current->getSymbol());
+        if (isComputerPlaying && current == &player2) {
+            board->makeComputerMove(current->getSymbol(), player1.getSymbol(), difficulty);
+        } else {
+            board->makeMove(current->getSymbol());
+        }
+
         board->drawBoard();
         if (board->checkWin()) {
             std::cout << "Player " << current->getSymbol() << " wins!" << std::endl;
@@ -94,4 +99,3 @@ void Game::run() {
     }
     
 }
-
